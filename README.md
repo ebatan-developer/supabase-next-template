@@ -1,39 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Supabase Next Template for Me
 
-## Getting Started
+基本作成者は日本人なので日本語多様です。英語にするつもりは今のところないです。
 
-First, run the development server:
+## アーキテクチャ
+- Supabase
+- Prisma
+- Next (Deploy to Vercel)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+(Supabaseをベースにしたくはないけど、Postgresに対してクライアントからnode-moduleで呼び出せたりするのはめっちゃ便利なので依存するけど、全てNextのAPIからデータ取得できるようにすれば、Prismaが全てを解決してくれるので、もはや不要になる。)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 必要環境
+- Docker
+  - 筆者はDocker Desktopを使ってるが、企業勢の人はよしなに・・・。
+- Supabaseのローカル環境
+  - https://www.supabase.jp/docs/guides/local-development
+- node: v16.5.0
+  - 筆者はtj/nを導入しているので`n auto`でnodeのバージョンを変更できるようにしてますが、nvmの人はよしなに・・・。
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## LocalでPostgresを立ち上げる
-```shell
-docker run --name ${Project名とか} -e POSTGRES_PASSWORD=${パスワードを設定} -d postgres
-```
+## 使い方
+- 基本は、`.env.template`に記載の物を`.env`へコピーして、実行すればいけるはず。
+- `supabase start`でSupabaseのローカル環境が立ち上がるので、そこにPostgresやらなんやらがだいたい入っているのでそれを信じる。
+![img.png](readme/img.png)
+- PostgresのURLなどはstart時の値を入れれば良い。
