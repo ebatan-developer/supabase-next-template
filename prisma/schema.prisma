@@ -1,0 +1,65 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model users {
+  id        String      @id @db.Uuid
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  email     String      @unique
+  name      String?
+  personas  personas[]
+  announces announces[]
+  referees  referees[]
+}
+
+model personas {
+  id        String   @id @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      users    @relation(fields: [usersId], references: [id])
+  usersId   String   @db.Uuid
+}
+
+model announces {
+  id        String   @id @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      users    @relation(fields: [usersId], references: [id])
+  usersId   String   @db.Uuid
+  title     String?
+  text      String
+  read      Boolean?
+}
+
+model referees {
+  id               String       @id @default(uuid()) @db.Uuid
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  user             users        @relation(fields: [usersId], references: [id])
+  jfaRegistationId String?
+  association      associations @relation(fields: [associationsId], references: [id])
+  usersId          String       @db.Uuid
+  associationsId   String       @db.Uuid
+}
+
+model prefectures {
+  id             String       @id @default(uuid()) @db.Uuid
+  code           Int          @unique
+  name           String
+  association    associations @relation(fields: [associationsId], references: [id])
+  associationsId String       @db.Uuid
+}
+
+model associations {
+  id          String        @id @default(uuid()) @db.Uuid
+  code        Int           @unique
+  name        String
+  prefectures prefectures[]
+  referees    referees[]
+}
